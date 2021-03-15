@@ -7,10 +7,14 @@ func (cw *Crawler) Run(){
 	cw.VisitedPages[cw.Source] =  true
 
 	go cw.pageProcessor(ch, cw.Webpages)
+	go cw.pageProcessor(ch, cw.Webpages)
+	go cw.pageProcessor(ch, cw.Webpages)
 
+	cw.mux.Lock()
 	for link, _ := range cw.VisitedPages{
 		ch <- link
 	}
+	cw.mux.Unlock()
 }
 
 func (cw *Crawler) pageProcessor(pages <-chan string, webpages map[string][]string){
@@ -20,7 +24,11 @@ func (cw *Crawler) pageProcessor(pages <-chan string, webpages map[string][]stri
 		if links, ok := webpages[page]; ok{
 
 			for _, link := range links{
-				cw.VisitedPages[link] = true
+
+				if _, ok := cw.VisitedPages[link]; !ok {
+					cw.VisitedPages[link] = true
+				}
+
 			}
 		}
 	}
