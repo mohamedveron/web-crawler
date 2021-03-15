@@ -15,4 +15,7 @@ RUN go mod download
 # Copy the code into the container
 COPY . .
 
-RUN make all
+RUN make build
+
+# Command to run when starting the container
+CMD ["bin/app"]
