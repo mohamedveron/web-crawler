@@ -1,6 +1,6 @@
 # web-crawler
 
-This is simple simulation for web crawler with dumy web pages
+This is simple simulation for concurrent web crawler with dumy web pages
 
 ## Setup and running the crawler
 
@@ -14,12 +14,12 @@ make all
 ```
 
 
-# Build docker image
+# Build and run docker image
 
 ```bash
-docker build --tag geolocation-service .
+docker build --tag web-crawler .
 ```
 
 ```bash
-docker run -p 9090:9090 geolocation-service
+docker run web-crawler
 ```
