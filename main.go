@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/mohamedveron/web-crawler/runner"
 )
 
@@ -10,7 +9,7 @@ func main() {
 	webpages := make(map[string][]string)
 	var visitedLinks = make(map[string]bool)
 
-	webpages["https://bigplato.tilda.ws/"] = []string{
+	webpages["https://bigplato.tilda.ws/home"] = []string{
 		"https://bigplato.tilda.ws/team",
 		"https://bigplato.tilda.ws/solution",
 	}
@@ -27,14 +26,15 @@ func main() {
 	}
 
 	webpages["https://bigplato.tilda.ws/solution/Corporateprofilemanagement"] = []string{
-		"https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin",
+		"https://bigplato.tilda.ws/solution/Corporateprofilemanagement/dolphin",
 	}
+	concurrentWorkers := 3
 
-	crawler := runner.NewCrawler("https://bigplato.tilda.ws/", "https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin",
-		webpages, visitedLinks)
+	crawler := runner.NewCrawler("https://bigplato.tilda.ws/home", "https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin",
+		"https://bigplato.tilda.ws/", concurrentWorkers, webpages, visitedLinks)
 
 	crawler.Run()
 
-	fmt.Println(visitedLinks)
+	//fmt.Println(visitedLinks)
 
 }
