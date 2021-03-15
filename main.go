@@ -1,29 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/mohamedveron/web-crawler/runner"
+)
+
+var visitedLinks = make(map[string]bool)
 
 
-func crawler(source string, dest string, webpages map[string][]string) {
-	fmt.Println(source, "->", dest)
-
-	links := pageProcessor(source, webpages)
-
-	for _, link := range links{
-
-		crawler(link, dest, webpages)
-	}
-
-}
-
-func pageProcessor(page string, webpages map[string][]string) []string {
-
-	if links, ok := webpages[page]; ok{
-
-		return links
-	}
-
-	return nil
-}
 
 func main() {
 
@@ -49,7 +33,9 @@ func main() {
 		"https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin",
 	}
 
-
-	crawler("https://bigplato.tilda.ws/", "https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin", webpages)
+	crawler := runner.NewCrawler("https://bigplato.tilda.ws/", "https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin", webpages, visitedLinks)
+	//crawler("https://bigplato.tilda.ws/", "https://bigplato.tilda.ws/services/Corporateprofilemanagement/dolphin", webpages)
+	crawler.Run()
+	fmt.Println(visitedLinks)
 
 }
