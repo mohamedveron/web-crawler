@@ -1,7 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"github.com/mohamedveron/web-crawler/runner"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
@@ -36,5 +40,13 @@ func main() {
 	crawler.Run()
 
 	//fmt.Println(visitedLinks)
+
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+	<-done
+	fmt.Println("crawler terminating...")
+
+
 
 }
