@@ -9,14 +9,10 @@ WORKDIR /app
 
 # Copy and download dependency using go mod
 COPY go.mod .
-COPY go.sum .
 COPY Makefile .
 RUN go mod download
 
 # Copy the code into the container
 COPY . .
 
-RUN make build
-
-# Command to run when starting the container
-CMD ["bin/app"]
+RUN make all
